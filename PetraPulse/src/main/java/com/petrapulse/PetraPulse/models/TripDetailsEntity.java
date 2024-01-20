@@ -1,4 +1,4 @@
 package com.petrapulse.PetraPulse.models;
 
-public class AttractionsBooking {
+public class TripDetailsEntity {
 }

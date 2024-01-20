@@ -1,5 +1,5 @@
 package com.petrapulse.PetraPulse.enums;
 
-public enum roles {
-    USER,ADMIN
+public enum TokenType {
+    BEARER
 }

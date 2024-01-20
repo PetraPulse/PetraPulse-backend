@@ -1,4 +1,4 @@
 package com.petrapulse.PetraPulse.models;
 
-public class RoleTypes {
+public class HotelBookingsEntity {
 }
