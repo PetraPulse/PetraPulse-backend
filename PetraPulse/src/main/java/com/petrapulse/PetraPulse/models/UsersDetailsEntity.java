@@ -20,7 +20,7 @@ public class UsersDetailsEntity implements UserDetails {
      @Id
      @GeneratedValue
      @Setter(AccessLevel.NONE)
-     private int id;
+     private Long id;
      private String username;
      private String email;
      private String password;
@@ -70,13 +70,4 @@ public class UsersDetailsEntity implements UserDetails {
      public boolean isEnabled() {
           return true;
      }
-
-     public UsersDetailsEntity(String username, String email, String password, String address, int phoneNumber) {
-          this.username = username;
-          this.email = email;
-          this.password = password;
-          this.address = address;
-          this.phoneNumber = phoneNumber;
-     }
-
 }

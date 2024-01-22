@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class TokenEntity {
     @Id
     @GeneratedValue
-    public Integer id;
+    public Long id;
 
     @Column(unique = true)
     public String token;

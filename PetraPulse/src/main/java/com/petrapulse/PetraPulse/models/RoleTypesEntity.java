@@ -12,10 +12,10 @@ import javax.persistence.*;
 public class RoleTypesEntity {
     @Id
     @GeneratedValue
-    private  int id;
+    private Long id;
     @Enumerated(value = EnumType.STRING)
     private Roles roleName;
-    public RoleTypesEntity(int id) {
+    public RoleTypesEntity(Long id) {
         this.id=id;
     }
 }
