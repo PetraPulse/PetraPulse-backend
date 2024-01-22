@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/PetraPulse-backend.iml" filepath="$PROJECT_DIR$/.idea/PetraPulse-backend.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/PetraPulse.main.iml" filepath="$PROJECT_DIR$/.idea/modules/PetraPulse.main.iml" />
     </modules>
   </component>
 </project>

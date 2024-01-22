@@ -10,12 +10,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
-@Getter
-public class AttractionsBookingEntity {
+public class HotelRoomsEntity {
     @Id
     @GeneratedValue
-    private Long attractionBooking_id;
+    private Long hotelRooms_id;
+    private String roomsType;
+    private int bedsNumber;
+    private float hotelRoomsPrice;
+    private boolean availableRoom;
+    private boolean breakfast;
+    private int roomCapacity;
 }
