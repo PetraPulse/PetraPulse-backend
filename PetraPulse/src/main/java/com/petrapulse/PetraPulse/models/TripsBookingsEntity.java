@@ -1,5 +1,4 @@
 package com.petrapulse.PetraPulse.models;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,4 +17,5 @@ public class TripsBookingsEntity {
     @Id
     @GeneratedValue
     private Long id;
+
 }
