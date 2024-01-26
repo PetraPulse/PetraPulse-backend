@@ -4,9 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.petrapulse.PetraPulse.bo.AuthenticationRequest;
 import com.petrapulse.PetraPulse.bo.AuthenticationResponse;
 import com.petrapulse.PetraPulse.bo.RegisterRequest;
+import com.petrapulse.PetraPulse.entities.RoleTypesEntity;
+import com.petrapulse.PetraPulse.enums.Roles;
 import com.petrapulse.PetraPulse.enums.TokenType;
 import com.petrapulse.PetraPulse.entities.TokenEntity;
 import com.petrapulse.PetraPulse.entities.AppUsersEntity;
+//import com.petrapulse.PetraPulse.repositories.RolesRepository;
 import com.petrapulse.PetraPulse.repositories.TokenRepository;
 import com.petrapulse.PetraPulse.repositories.UserDetailsJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +32,7 @@ public class AuthenticationService {
     private final JWTService jwtService;
     private final AuthenticationManager authenticationManager;
 
+
     public AuthenticationResponse register(RegisterRequest request) { //SignUp
         var user = AppUsersEntity.builder()
                 .username(request.getUsername())
@@ -36,7 +40,7 @@ public class AuthenticationService {
                 .country(request.getCountry())
                 .dateOfBirth(request.getDateOfBirth())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(request.getRole())
+                .role(new RoleTypesEntity(2L)) //L means Long
                 .build();
         var savedUser = userDetailsJpaRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
