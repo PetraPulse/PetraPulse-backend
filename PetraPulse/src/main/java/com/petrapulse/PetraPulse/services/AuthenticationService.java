@@ -1,12 +1,14 @@
-package com.petrapulse.PetraPulse.auth;
+package com.petrapulse.PetraPulse.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.petrapulse.PetraPulse.bo.AuthenticationRequest;
+import com.petrapulse.PetraPulse.bo.AuthenticationResponse;
+import com.petrapulse.PetraPulse.bo.RegisterRequest;
 import com.petrapulse.PetraPulse.enums.TokenType;
-import com.petrapulse.PetraPulse.models.TokenEntity;
-import com.petrapulse.PetraPulse.models.UsersDetailsEntity;
+import com.petrapulse.PetraPulse.entities.TokenEntity;
+import com.petrapulse.PetraPulse.entities.UsersDetailsEntity;
 import com.petrapulse.PetraPulse.repositories.TokenRepository;
 import com.petrapulse.PetraPulse.repositories.UserDetailsJpaRepository;
-import com.petrapulse.PetraPulse.services.JWTService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,8 +33,8 @@ public class AuthenticationService {
         var user = UsersDetailsEntity.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
-                .phoneNumber(request.getPhoneNumber())
-                .address(request.getAddress())
+                .country(request.getCountry())
+                .dateOfBirth(request.getDateOfBirth())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
                 .build();

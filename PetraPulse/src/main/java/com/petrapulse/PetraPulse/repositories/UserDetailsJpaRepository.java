@@ -1,6 +1,6 @@
 package com.petrapulse.PetraPulse.repositories;
 
-import com.petrapulse.PetraPulse.models.UsersDetailsEntity;
+import com.petrapulse.PetraPulse.entities.UsersDetailsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

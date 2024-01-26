@@ -27,7 +27,8 @@ public class WebSecurityConfigs {
                 .cors().disable()
                 .csrf().disable()
                 .authorizeRequests()
-                .requestMatchers().permitAll()
+                .antMatchers("/","/signup","/login")
+                .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()//A session is a period of interaction between a user and a web application. It starts when a user accesses the application and ends when the user logs out or the session expires.
@@ -35,7 +36,6 @@ public class WebSecurityConfigs {
                 .and()
                 .authenticationProvider(authenticationProvider)// Authentication providers are responsible for validating and authenticating user credentials (Username/Password).
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); //execute jwtAuthFilter before the UsernamePasswordAuthenticationFilter (which is the login page from spring security).
-
         return http.build();
     }
 }

@@ -1,6 +1,6 @@
 package com.petrapulse.PetraPulse.repositories;
 
-import com.petrapulse.PetraPulse.models.TokenEntity;
+import com.petrapulse.PetraPulse.entities.TokenEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

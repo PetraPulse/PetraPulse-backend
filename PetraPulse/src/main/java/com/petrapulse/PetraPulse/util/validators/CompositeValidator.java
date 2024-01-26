@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 public class CompositeValidator<P, R> implements Validator<P, List<R>> {
 
+    // validators is an instance list of the interface Validators that takes input and returns the list of violations
     private final List<Validator<P, List<R>>> validators = new ArrayList<>();
 
 
