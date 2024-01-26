@@ -5,9 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
@@ -15,8 +13,13 @@ import javax.persistence.Id;
 @Data
 @Builder
 public class CarBookingsEntity {
-
     @Id
     @GeneratedValue
     private Long id;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UsersDetailsEntity usersDetailsEntity;
+    @ManyToOne
+    @JoinColumn(name = "car_id")
+    private CarEntity carEntity;
 }

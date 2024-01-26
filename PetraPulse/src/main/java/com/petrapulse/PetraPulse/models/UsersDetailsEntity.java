@@ -28,6 +28,12 @@ public class UsersDetailsEntity implements UserDetails {
      private int phoneNumber;
      @OneToMany(mappedBy = "user")
      private List<TokenEntity> tokens;
+     @OneToMany(mappedBy = "usersDetailsEntity")
+     private List<HotelRoomsEntity> hotelRoomsEntity;
+     @OneToMany(mappedBy = "usersDetailsEntity")
+     private List<AttractionsBookingEntity> attractionsBookingEntities;
+     @OneToMany(mappedBy = "usersDetailsEntity")
+     private List<CarBookingsEntity>carBookingsEntities;
 
      @OneToOne
      @JoinColumn(name = "role_id")

@@ -8,6 +8,8 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 @Getter
@@ -26,4 +28,6 @@ public class AttractionEntity {
     private float attractionPrice;
     private int duration;
     private String attractionImage;
+    @OneToMany(mappedBy = "attractionEntity")
+    private List<AttractionsBookingEntity> attractionsBookingEntityList;
 }

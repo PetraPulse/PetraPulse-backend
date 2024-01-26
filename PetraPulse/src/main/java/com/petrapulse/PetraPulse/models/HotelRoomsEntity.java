@@ -5,9 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -24,4 +22,10 @@ public class HotelRoomsEntity {
     private boolean availableRoom;
     private boolean breakfast;
     private int roomCapacity;
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private UsersDetailsEntity usersDetailsEntity;
+    @OneToOne(mappedBy = "hotelRoomsEntity")
+    private HotelBookingsEntity hotelBookingsEntity;
 }

@@ -1,13 +1,13 @@
 package com.petrapulse.PetraPulse.models;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,4 +27,7 @@ public class CarEntity {
     private int seatNumber;
     private float price;
     private String trunkSize;
+    @OneToMany(mappedBy = "carEntity")
+    private List<CarBookingsEntity>carBookingsEntities;
+
 }
