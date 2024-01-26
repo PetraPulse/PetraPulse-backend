@@ -11,8 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -24,7 +22,6 @@ public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
     private final UsersDetailsServiceImpl usersDetailsService;
-
     @GetMapping("/signup")
     public String signup() {
        return "SignUpPage";
@@ -63,7 +60,6 @@ public class AuthenticationController {
         } else if (violation.contains("Date Of Birth Cannot Be Empty")) {
             model.addAttribute("dateOfBirthMessage", "Date Of Birth Cannot Be Empty");
         }
-        // Add additional handling for other violations if needed
     }
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest request) {

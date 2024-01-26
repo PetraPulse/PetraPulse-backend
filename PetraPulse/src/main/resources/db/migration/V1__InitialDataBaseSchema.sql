@@ -13,12 +13,13 @@ CREATE TABLE appusersentity (
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     country VARCHAR(255) NOT NULL,
+    image VARCHAR(500),
     date_of_birth DATE NOT NULL,
     created_by VARCHAR(255),
     created_at DATE,
     updated_by VARCHAR(255),
     updated_at DATE,
-    role_id BIGINT,
+    role_id BIGINT NOT NULL,
     FOREIGN KEY (role_id) REFERENCES roletypesentity (role_id)
 );
 
