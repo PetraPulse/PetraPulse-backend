@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+</head>
+<body>
+<!--SignUp Validation Messages-->
+<nav th:if="${usernameMessage}"  th:fragment="username-error" th:text="${usernameMessage}"></nav>
+<nav th:if="${passwordMessage}"  th:fragment="password-error" th:text="${passwordMessage}"></nav>
+<nav th:if="${emailMessage}"  th:fragment="email-error" th:text="${emailMessage}"></nav>
+<nav th:if="${dateOfBirthMessage}"  th:fragment="dateOfBirth-error" th:text="${dateOfBirthMessage}"></nav>
+
+</body>
+</html>

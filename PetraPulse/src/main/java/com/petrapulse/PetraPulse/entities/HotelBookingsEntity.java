@@ -11,8 +11,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -42,7 +40,7 @@ public class HotelBookingsEntity {
     private LocalDate updatedAt;
     @ManyToOne
     @JoinColumn(name="user_id")
-    private UsersDetailsEntity hotelUser;
+    private AppUsersEntity hotelUser;
     @OneToOne
     @JoinColumn(name="room_id")
     private HotelRoomsEntity bookedHotelRooms;

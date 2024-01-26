@@ -1,174 +1,180 @@
-CREATE TABLE RoleTypesEntity (
-    role_id BIGINT,
-    roleName VARCHAR(255) NOT NULL,
-    createdBy VARCHAR(255) NOT NULL,
-    createdAt TIMESTAMP,
-    updatedBy VARCHAR(255) NOT NULL,
-    updatedAt TIMESTAMP,
-    PRIMARY KEY(role_id)
+CREATE TABLE roletypesentity (
+    role_id BIGSERIAL PRIMARY KEY,
+    role_name VARCHAR(255) NOT NULL,
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255),
+    updated_at DATE
 );
 
-CREATE TABLE UsersDetailsEntity (
-    user_details_id BIGINT,
+CREATE TABLE appusersentity (
+    user_details_id BIGSERIAL PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     country VARCHAR(255) NOT NULL,
-    dateOfBirth DATE NOT NULL,
-    createdBy VARCHAR(255) NOT NULL,
-    createdAt TIMESTAMP,
-    updatedBy VARCHAR(255) NOT NULL,
-    updatedAt TIMESTAMP,
-    role_id BIGINT REFERENCES RoleTypesEntity(role_id),
-    PRIMARY KEY(user_details_id)
+    date_of_birth DATE NOT NULL,
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255),
+    updated_at DATE,
+    role_id BIGINT,
+    FOREIGN KEY (role_id) REFERENCES roletypesentity (role_id)
 );
 
-CREATE TABLE HotelEntity (
-    hotel_id BIGINT,
-    hotelName VARCHAR(255) NOT NULL,
-    hotelLocation VARCHAR(255) NOT NULL,
-    hotelImage VARCHAR(255) NOT NULL,
-    hotelDescription VARCHAR(500) NOT NULL,
-    hotelAvailability BOOLEAN NOT NULL,
-    hotelRating INT NOT NULL,
-    createdBy VARCHAR(255) NOT NULL,
-    createdAt TIMESTAMP,
-    updatedBy VARCHAR(255) NOT NULL,
-    updatedAt TIMESTAMP,
-    PRIMARY KEY(hotel_id)
+CREATE TABLE attraction_entity (
+    attraction_id BIGSERIAL PRIMARY KEY,
+    attraction_name VARCHAR(255) NOT NULL,
+    attraction_description VARCHAR(500) NOT NULL,
+    attraction_place VARCHAR(255) NOT NULL,
+    availability BOOLEAN NOT NULL,
+    attraction_company VARCHAR(255) NOT NULL,
+    attraction_price FLOAT NOT NULL,
+    duration INT NOT NULL,
+    attraction_image VARCHAR(500) NOT NULL,
+    attraction_type VARCHAR(255) NOT NULL,
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255),
+    updated_at DATE
 );
-CREATE TABLE HotelRoomsEntity (
-    hotel_rooms_id BIGINT,
-    roomsType VARCHAR(255) NOT NULL,
-    hotelRoomsPrice FLOAT NOT NULL,
-    availableRoom BOOLEAN NOT NULL,
-    roomCapacity INT NOT NULL,
-    createdBy VARCHAR(255) NOT NULL,
-    createdAt TIMESTAMP,
-    updatedBy VARCHAR(255) NOT NULL,
-    updatedAt TIMESTAMP,
-    hotel_id BIGINT REFERENCES HotelEntity(hotel_id),
-    PRIMARY KEY(hotel_rooms_id)
+CREATE TABLE attractions_booking_entity (
+    attraction_booking_id BIGSERIAL PRIMARY KEY,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    attraction_time TIME NOT NULL,
+    booking_status VARCHAR(255) NOT NULL,
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255),
+    updated_at DATE,
+    attraction_id BIGINT,
+    user_details_id BIGINT,
+    FOREIGN KEY (attraction_id) REFERENCES attraction_entity (attraction_id),
+    FOREIGN KEY (user_details_id) REFERENCES appusersentity (user_details_id)
 );
-CREATE TABLE HotelBookingsEntity (
-    hotel_bookings_id BIGINT,
-    startDate TIMESTAMP NOT NULL,
-    endDate TIMESTAMP NOT NULL,
-    bookingStatus VARCHAR(255) NOT NULL,
-    extras VARCHAR(255) NOT NULL,
-    createdBy VARCHAR(255) NOT NULL,
-    createdAt TIMESTAMP,
-    updatedBy VARCHAR(255) NOT NULL,
-    updatedAt TIMESTAMP,
-    user_id BIGINT REFERENCES UsersDetailsEntity(user_details_id),
-    room_id BIGINT REFERENCES HotelRoomsEntity(hotel_rooms_id),
-    PRIMARY KEY(hotel_bookings_id)
-);
-CREATE TABLE CarEntity (
-    car_id BIGINT,
-    year INT NOT NULL,
+
+CREATE TABLE car_entity (
+    car_id BIGSERIAL PRIMARY KEY,
+    model_year INT NOT NULL,
     availability BOOLEAN NOT NULL,
     model VARCHAR(255) NOT NULL,
     miles FLOAT NOT NULL,
-    carCompany VARCHAR(255) NOT NULL,
-    carImage VARCHAR(500) NOT NULL,
-    seatNumber INT NOT NULL,
+    car_company VARCHAR(255) NOT NULL,
+    car_image VARCHAR(500) NOT NULL,
+    seat_number INT NOT NULL,
     price FLOAT NOT NULL,
-    trunkSize VARCHAR(255) NOT NULL,
-    createdBy VARCHAR(255) NOT NULL,
-    createdAt TIMESTAMP,
-    updatedBy VARCHAR(255) NOT NULL,
-    updatedAt TIMESTAMP,
-    PRIMARY KEY(car_id)
+    trunk_size VARCHAR(255) NOT NULL,
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255) ,
+    updated_at DATE
 );
-CREATE TABLE CarBookingsEntity (
-    car_booking_id BIGINT,
-    pickUpDate TIMESTAMP NOT NULL,
-    dropOffDate TIMESTAMP NOT NULL,
-    bookingStatus VARCHAR(255) NOT NULL,
+CREATE TABLE car_bookings_entity (
+    booking_id BIGSERIAL PRIMARY KEY,
+    pick_up_date DATE NOT NULL,
+    drop_off_date DATE NOT NULL,
+    booking_status VARCHAR(255) NOT NULL,
     extras VARCHAR(255) NOT NULL,
-    createdBy VARCHAR(255) NOT NULL,
-    createdAt TIMESTAMP,
-    updatedBy VARCHAR(255) NOT NULL,
-    updatedAt TIMESTAMP,
-    car_id BIGINT REFERENCES CarEntity(car_id),
-    user_id BIGINT REFERENCES UsersDetailsEntity(user_details_id),
-    PRIMARY KEY(car_booking_id)
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255),
+    updated_at DATE,
+    car_id BIGINT,
+    user_details_id BIGINT,
+    FOREIGN KEY (car_id) REFERENCES car_entity (car_id),
+    FOREIGN KEY (user_details_id) REFERENCES appusersentity (user_details_id)
 );
 
-CREATE TABLE AttractionEntity (
-    attraction_id BIGINT,
-    attractionName VARCHAR(255) NOT NULL,
-    attractionDescription VARCHAR(500),
-    attractionPlace VARCHAR(255),
-    availability BOOLEAN,
-    attractionCompany VARCHAR(255),
-    attractionPrice FLOAT,
-    duration INT,
-    attractionImage VARCHAR(500),
-    attractionType VARCHAR(255),
-    createdBy VARCHAR(255),
-    createdAt TIMESTAMP,
-    updatedBy VARCHAR(255),
-    updatedAt TIMESTAMP,
-    PRIMARY KEY(attraction_id)
+CREATE TABLE hotel_entity (
+    hotel_id BIGSERIAL PRIMARY KEY,
+    hotel_name VARCHAR(255) NOT NULL,
+    hotel_location VARCHAR(255) NOT NULL,
+    hotel_image VARCHAR(500) NOT NULL,
+    hotel_description VARCHAR(500) NOT NULL,
+    hotel_availability BOOLEAN NOT NULL,
+    hotel_rating INT NOT NULL,
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255),
+    updated_at DATE
 );
-CREATE TABLE AttractionsBookingEntity (
-    attraction_booking_id BIGINT,
-    startDate TIMESTAMP NOT NULL,
-    endDate TIMESTAMP NOT NULL,
-    attractionTime TIMESTAMP NOT NULL,
-    bookingStatus VARCHAR(255) NOT NULL,
-    createdBy VARCHAR(255) NOT NULL,
-    createdAt TIMESTAMP NOT NULL,
-    updatedBy VARCHAR(255) NOT NULL,
-    updatedAt TIMESTAMP,
-    attraction_id BIGINT REFERENCES AttractionEntity(attraction_id),
-    user_id BIGINT REFERENCES UsersDetailsEntity(user_details_id),
-    PRIMARY KEY(attraction_booking_id)
+CREATE TABLE hotel_rooms_entity (
+    room_id BIGSERIAL PRIMARY KEY,
+    rooms_type VARCHAR(255) NOT NULL,
+    hotel_rooms_price FLOAT NOT NULL,
+    available_room BOOLEAN NOT NULL,
+    room_capacity INT NOT NULL,
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255),
+    updated_at DATE,
+    hotel_id BIGINT,
+    FOREIGN KEY (hotel_id) REFERENCES hotel_entity (hotel_id)
+);
+CREATE TABLE hotel_bookings_entity (
+    booking_id BIGSERIAL PRIMARY KEY,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    booking_status VARCHAR(255) NOT NULL,
+    extras VARCHAR(255) NOT NULL,
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255),
+    updated_at DATE,
+    user_details_id BIGINT,
+    room_id BIGINT,
+    FOREIGN KEY (user_details_id) REFERENCES appusersentity (user_details_id),
+    FOREIGN KEY (room_id) REFERENCES hotel_rooms_entity (room_id)
 );
 
-CREATE TABLE TripDetailsEntity (
-    trip_details_id BIGINT,
+
+CREATE TABLE trip_details_entity (
+    trip_id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     location VARCHAR(255) NOT NULL,
     duration VARCHAR(255) NOT NULL,
     price INT NOT NULL,
     availability BOOLEAN NOT NULL,
-    createdBy VARCHAR(255) NOT NULL,
-    createdAt TIMESTAMP,
-    updatedBy VARCHAR(255) NOT NULL,
-    updatedAt TIMESTAMP,
-    hotel_id BIGINT REFERENCES HotelEntity(hotel_id),
-    car_id BIGINT REFERENCES CarEntity(car_id),
-    attraction_id BIGINT REFERENCES AttractionEntity(attraction_id),
-    PRIMARY KEY(trip_details_id)
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255),
+    updated_at DATE,
+    hotel_id BIGINT,
+    car_id BIGINT,
+    attraction_id BIGINT,
+    FOREIGN KEY (hotel_id) REFERENCES hotel_entity (hotel_id),
+    FOREIGN KEY (car_id) REFERENCES car_entity (car_id),
+    FOREIGN KEY (attraction_id) REFERENCES attraction_entity (attraction_id)
 );
-CREATE TABLE TripsBookingsEntity (
-    trip_bookings_id BIGINT,
-    startDate TIMESTAMP NOT NULL,
-    endDate TIMESTAMP NOT NULL,
-    tripTime TIMESTAMP NOT NULL,
-    bookingStatus VARCHAR(255) NOT NULL,
-    createdBy VARCHAR(255) NOT NULL,
-    createdAt TIMESTAMP,
-    updatedBy VARCHAR(255) NOT NULL,
-    updatedAt TIMESTAMP,
-    user_id BIGINT REFERENCES UsersDetailsEntity(user_details_id),
-    trip_id BIGINT REFERENCES TripDetailsEntity(trip_details_id),
-    PRIMARY KEY(trip_bookings_id)
+CREATE TABLE trips_bookings_entity (
+    booking_id BIGSERIAL PRIMARY KEY,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    trip_time TIME NOT NULL,
+    booking_status VARCHAR(255) NOT NULL,
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255),
+    updated_at DATE,
+    user_details_id BIGINT,
+    trip_id BIGINT,
+    FOREIGN KEY (user_details_id) REFERENCES appusersentity (user_details_id),
+    FOREIGN KEY (trip_id) REFERENCES trip_details_entity (trip_id)
 );
 
-CREATE TABLE TokenEntity (
-    token_id BIGINT,
+CREATE TABLE token_entity (
+    id BIGSERIAL PRIMARY KEY,
     token VARCHAR(255) UNIQUE NOT NULL,
-    tokenType VARCHAR(255) NOT NULL,
+    token_type VARCHAR(255) NOT NULL,
     revoked BOOLEAN NOT NULL,
     expired BOOLEAN NOT NULL,
-    createdBy VARCHAR(255) NOT NULL,
-    createdAt TIMESTAMP,
-    updatedBy VARCHAR(255) NOT NULL,
-    updatedAt TIMESTAMP,
-    user_id BIGINT REFERENCES UsersDetailsEntity(user_details_id),
-    PRIMARY KEY(token_id)
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255),
+    updated_at DATE,
+    user_id BIGINT,
+    FOREIGN KEY (user_id) REFERENCES appusersentity (user_details_id)
 );
+
+CREATE SEQUENCE hibernate_sequence START 1;

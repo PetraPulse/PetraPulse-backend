@@ -10,7 +10,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
@@ -45,5 +44,5 @@ public class TokenEntity {
     //Many tokens are associated with one user for security reasons / Lazy loading: means that the associated UsersDetailsEntity will be loaded from the database only when it is explicitly accessed
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    public UsersDetailsEntity user;
+    public AppUsersEntity user;
 }

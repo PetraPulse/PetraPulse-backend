@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,14 +9,18 @@
 
 <form action="/signup" method="POST">
     <h2>Sign Up</h2>
+
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" required>
+    <div th:if="${usernameMessage}" th:text="${usernameMessage}"></div>
 
     <label for="email">Email:</label>
     <input type="email" id="email" name="email" required>
+    <div th:if="${emailMessage}" th:text="${emailMessage}"></div>
 
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" required>
+    <div th:if="${passwordMessage}" th:text="${passwordMessage}"></div>
 
     <label for="country">Country:</label>
     <select id="country" name="country" required>
@@ -27,6 +31,7 @@
 
     <label for="dateOfBirth">Date Of Birth:</label>
     <input type="Date" id="dateOfBirth" name="dateOfBirth" required>
+    <div th:if="${dateOfBirthMessage}" th:text="${dateOfBirthMessage}"></div>
 
     <button type="submit">Sign Up</button>
 </form>

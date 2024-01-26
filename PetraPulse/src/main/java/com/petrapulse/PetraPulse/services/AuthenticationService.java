@@ -6,7 +6,7 @@ import com.petrapulse.PetraPulse.bo.AuthenticationResponse;
 import com.petrapulse.PetraPulse.bo.RegisterRequest;
 import com.petrapulse.PetraPulse.enums.TokenType;
 import com.petrapulse.PetraPulse.entities.TokenEntity;
-import com.petrapulse.PetraPulse.entities.UsersDetailsEntity;
+import com.petrapulse.PetraPulse.entities.AppUsersEntity;
 import com.petrapulse.PetraPulse.repositories.TokenRepository;
 import com.petrapulse.PetraPulse.repositories.UserDetailsJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) { //SignUp
-        var user = UsersDetailsEntity.builder()
+        var user = AppUsersEntity.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .country(request.getCountry())
@@ -67,7 +67,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    private void saveUserToken(UsersDetailsEntity user, String jwtToken) {
+    private void saveUserToken(AppUsersEntity user, String jwtToken) {
         var token = TokenEntity.builder()
                 .user(user)
                 .token(jwtToken)
@@ -78,7 +78,7 @@ public class AuthenticationService {
         tokenRepository.save(token);
     }
 
-    private void revokeAllUserTokens(UsersDetailsEntity user) {
+    private void revokeAllUserTokens(AppUsersEntity user) {
         var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
         if (validUserTokens.isEmpty())
             return;

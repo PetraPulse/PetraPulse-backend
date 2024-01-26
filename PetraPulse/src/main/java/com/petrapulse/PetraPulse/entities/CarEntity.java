@@ -24,7 +24,7 @@ public class CarEntity {
     @Id
     @GeneratedValue
     private Long car_id;
-    private int year;
+    private int modelYear;
     private boolean availability;
     private String model;
     private float miles;

@@ -10,7 +10,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -45,5 +44,5 @@ public class AttractionsBookingEntity {
     private AttractionEntity attraction;
     @ManyToOne
     @JoinColumn(name="user_id")
-    private UsersDetailsEntity attractionUser;
+    private AppUsersEntity attractionUser;
 }

@@ -12,36 +12,42 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
+@Table(name = "appusersentity")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
-public class UsersDetailsEntity implements UserDetails {
+public class AppUsersEntity implements UserDetails {
      @Id
      @GeneratedValue(strategy = GenerationType.IDENTITY)
      @Setter(AccessLevel.NONE)
+     @Column(name = "user_details_id")
      private Long id;
      private String username;
      private String email;
      private String password;
      private String country;
      @DateTimeFormat(pattern = "yyyy-MM-dd")
+     @Column(name = "date_of_birth")
      private LocalDate dateOfBirth;
      @CreatedBy
+     @Column(name = "created_by")
      private String createdBy;
      @CreatedDate
      @DateTimeFormat(pattern = "yyyy-MM-dd")
+     @Column(name = "created_at")
      private LocalDate createdAt;
      @LastModifiedBy
+     @Column(name = "updated_by")
      private String updatedBy;
      @LastModifiedDate
      @DateTimeFormat(pattern = "yyyy-MM-dd")
+     @Column(name = "updated_at")
      private LocalDate updatedAt;
      @OneToMany(mappedBy = "user")
      private List<TokenEntity> tokens;
