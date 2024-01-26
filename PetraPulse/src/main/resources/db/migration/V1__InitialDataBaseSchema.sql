@@ -1,109 +1,180 @@
-CREATE TABLE RoleTypes(
-  role_id BIGSERIAL NOT NULL,
-  role_name VARCHAR(255) NOT NULL,
-  PRIMARY KEY (role_id)
+CREATE TABLE roletypesentity (
+    role_id BIGSERIAL PRIMARY KEY,
+    role_name VARCHAR(255) NOT NULL,
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255),
+    updated_at DATE
 );
 
-CREATE TABLE UsersDetails (
-    user_id BIGSERIAL NOT NULL,
-    role_id BIGSERIAL NOT NULL,
-    user_name VARCHAR(255) NOT NULL,
+CREATE TABLE appusersentity (
+    user_details_id BIGSERIAL PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    address VARCHAR(500) NOT NULL,
-    phone_number INTEGER NOT NULL,
-    PRIMARY KEY (user_id),
-    FOREIGN KEY (role_id) REFERENCES RoleTypes(role_id)
+    country VARCHAR(255) NOT NULL,
+    date_of_birth DATE NOT NULL,
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255),
+    updated_at DATE,
+    role_id BIGINT,
+    FOREIGN KEY (role_id) REFERENCES roletypesentity (role_id)
 );
 
-CREATE TABLE TokenEntity (
-    token_id BIGSERIAL NOT NULL,
-    user_id BIGSERIAL NOT NULL,
-    token VARCHAR(255) NOT NULL,
-    token_type VARCHAR(50) DEFAULT 'BEARER',
-    revoked boolean NOT NULL,
-    expired boolean NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES UsersDetails(user_id),
-    PRIMARY KEY (token_id)
+CREATE TABLE attraction_entity (
+    attraction_id BIGSERIAL PRIMARY KEY,
+    attraction_name VARCHAR(255) NOT NULL,
+    attraction_description VARCHAR(500) NOT NULL,
+    attraction_place VARCHAR(255) NOT NULL,
+    availability BOOLEAN NOT NULL,
+    attraction_company VARCHAR(255) NOT NULL,
+    attraction_price FLOAT NOT NULL,
+    duration INT NOT NULL,
+    attraction_image VARCHAR(500) NOT NULL,
+    attraction_type VARCHAR(255) NOT NULL,
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255),
+    updated_at DATE
+);
+CREATE TABLE attractions_booking_entity (
+    attraction_booking_id BIGSERIAL PRIMARY KEY,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    attraction_time TIME NOT NULL,
+    booking_status VARCHAR(255) NOT NULL,
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255),
+    updated_at DATE,
+    attraction_id BIGINT,
+    user_details_id BIGINT,
+    FOREIGN KEY (attraction_id) REFERENCES attraction_entity (attraction_id),
+    FOREIGN KEY (user_details_id) REFERENCES appusersentity (user_details_id)
 );
 
-CREATE TABLE BookedHotel(
-   booked_hotel_id BIGSERIAL NOT NULL,
-   name VARCHAR(255),
-   PRIMARY KEY (booked_hotel_id)
+CREATE TABLE car_entity (
+    car_id BIGSERIAL PRIMARY KEY,
+    model_year INT NOT NULL,
+    availability BOOLEAN NOT NULL,
+    model VARCHAR(255) NOT NULL,
+    miles FLOAT NOT NULL,
+    car_company VARCHAR(255) NOT NULL,
+    car_image VARCHAR(500) NOT NULL,
+    seat_number INT NOT NULL,
+    price FLOAT NOT NULL,
+    trunk_size VARCHAR(255) NOT NULL,
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255) ,
+    updated_at DATE
 );
-
-CREATE TABLE HotelBookings (
-    hotel_booking_id BIGSERIAL NOT NULL,
-    hotel_id BIGSERIAL NOT NULL,
-    user_id BIGSERIAL NOT NULL,
-    check_in_date DATE NOT NULL,
-    check_out_date DATE NOT NULL,
-    number_of_guests INTEGER NOT NULL,
-    price INTEGER NOT NULL,
-    PRIMARY KEY (hotel_booking_id),
-    FOREIGN KEY (hotel_id) REFERENCES BookedHotel(booked_hotel_id),
-    FOREIGN KEY (user_id) REFERENCES UsersDetails(user_id)
-);
-
-
-CREATE TABLE BookedCar(
-   booked_car_id BIGSERIAL NOT NULL,
-   name VARCHAR(255),
-   PRIMARY KEY (booked_car_id)
-);
-CREATE TABLE CarBookings (
-    car_booking_id BIGSERIAL NOT NULL,
-    car_id BIGSERIAL NOT NULL,
-    user_id BIGSERIAL NOT NULL,
+CREATE TABLE car_bookings_entity (
+    booking_id BIGSERIAL PRIMARY KEY,
     pick_up_date DATE NOT NULL,
-    drop_of_date DATE NOT NULL,
-    price INTEGER NOT NULL,
-    PRIMARY KEY (car_booking_id),
-    FOREIGN KEY (car_id) REFERENCES BookedCar(booked_car_id),
-    FOREIGN KEY (user_id) REFERENCES UsersDetails(user_id)
+    drop_off_date DATE NOT NULL,
+    booking_status VARCHAR(255) NOT NULL,
+    extras VARCHAR(255) NOT NULL,
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255),
+    updated_at DATE,
+    car_id BIGINT,
+    user_details_id BIGINT,
+    FOREIGN KEY (car_id) REFERENCES car_entity (car_id),
+    FOREIGN KEY (user_details_id) REFERENCES appusersentity (user_details_id)
+);
+
+CREATE TABLE hotel_entity (
+    hotel_id BIGSERIAL PRIMARY KEY,
+    hotel_name VARCHAR(255) NOT NULL,
+    hotel_location VARCHAR(255) NOT NULL,
+    hotel_image VARCHAR(500) NOT NULL,
+    hotel_description VARCHAR(500) NOT NULL,
+    hotel_availability BOOLEAN NOT NULL,
+    hotel_rating INT NOT NULL,
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255),
+    updated_at DATE
+);
+CREATE TABLE hotel_rooms_entity (
+    room_id BIGSERIAL PRIMARY KEY,
+    rooms_type VARCHAR(255) NOT NULL,
+    hotel_rooms_price FLOAT NOT NULL,
+    available_room BOOLEAN NOT NULL,
+    room_capacity INT NOT NULL,
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255),
+    updated_at DATE,
+    hotel_id BIGINT,
+    FOREIGN KEY (hotel_id) REFERENCES hotel_entity (hotel_id)
+);
+CREATE TABLE hotel_bookings_entity (
+    booking_id BIGSERIAL PRIMARY KEY,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    booking_status VARCHAR(255) NOT NULL,
+    extras VARCHAR(255) NOT NULL,
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255),
+    updated_at DATE,
+    user_details_id BIGINT,
+    room_id BIGINT,
+    FOREIGN KEY (user_details_id) REFERENCES appusersentity (user_details_id),
+    FOREIGN KEY (room_id) REFERENCES hotel_rooms_entity (room_id)
 );
 
 
-CREATE TABLE BookedAttraction(
-   booked_attraction_id BIGSERIAL NOT NULL,
-   name VARCHAR(255),
-   PRIMARY KEY (booked_attraction_id)
-);
-CREATE TABLE AttractionsBookings (
-    attraction_booking_id BIGSERIAL NOT NULL,
-    attraction_id BIGSERIAL NOT NULL,
-    user_id BIGSERIAL NOT NULL,
-    price INTEGER NOT NULL,
-    PRIMARY KEY (attraction_booking_id),
-    FOREIGN KEY (attraction_id) REFERENCES BookedAttraction(booked_attraction_id),
-    FOREIGN KEY (user_id) REFERENCES UsersDetails(user_id)
-);
-
-
-
-CREATE TABLE TripDetails (
-    trip_id BIGSERIAL NOT NULL,
+CREATE TABLE trip_details_entity (
+    trip_id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     location VARCHAR(255) NOT NULL,
-    duration INTEGER NOT NULL,
-    price INTEGER NOT NULL,
-    rating INTEGER NOT NULL,
-    PRIMARY KEY (trip_id)
-);
-CREATE TABLE TripBookings (
-    trip_booking_id BIGSERIAL NOT NULL,
-    trip_id BIGSERIAL NOT NULL,
-    user_id BIGSERIAL NOT NULL,
-    number_of_guests INTEGER NOT NULL,
-    selected_date Date NOT NULL,
+    duration VARCHAR(255) NOT NULL,
+    price INT NOT NULL,
     availability BOOLEAN NOT NULL,
-    cancellation BOOLEAN NOT NULL,
-    PRIMARY KEY (trip_booking_id),
-    FOREIGN KEY (trip_id) REFERENCES TripDetails(trip_id),
-    FOREIGN KEY (user_id) REFERENCES UsersDetails(user_id)
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255),
+    updated_at DATE,
+    hotel_id BIGINT,
+    car_id BIGINT,
+    attraction_id BIGINT,
+    FOREIGN KEY (hotel_id) REFERENCES hotel_entity (hotel_id),
+    FOREIGN KEY (car_id) REFERENCES car_entity (car_id),
+    FOREIGN KEY (attraction_id) REFERENCES attraction_entity (attraction_id)
+);
+CREATE TABLE trips_bookings_entity (
+    booking_id BIGSERIAL PRIMARY KEY,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    trip_time TIME NOT NULL,
+    booking_status VARCHAR(255) NOT NULL,
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255),
+    updated_at DATE,
+    user_details_id BIGINT,
+    trip_id BIGINT,
+    FOREIGN KEY (user_details_id) REFERENCES appusersentity (user_details_id),
+    FOREIGN KEY (trip_id) REFERENCES trip_details_entity (trip_id)
 );
 
+CREATE TABLE token_entity (
+    id BIGSERIAL PRIMARY KEY,
+    token VARCHAR(255) UNIQUE NOT NULL,
+    token_type VARCHAR(255) NOT NULL,
+    revoked BOOLEAN NOT NULL,
+    expired BOOLEAN NOT NULL,
+    created_by VARCHAR(255),
+    created_at DATE,
+    updated_by VARCHAR(255),
+    updated_at DATE,
+    user_id BIGINT,
+    FOREIGN KEY (user_id) REFERENCES appusersentity (user_details_id)
+);
 
-
-
+CREATE SEQUENCE hibernate_sequence START 1;

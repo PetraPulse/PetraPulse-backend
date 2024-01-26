@@ -1,12 +1,14 @@
-package com.petrapulse.PetraPulse.auth;
+package com.petrapulse.PetraPulse.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.petrapulse.PetraPulse.bo.AuthenticationRequest;
+import com.petrapulse.PetraPulse.bo.AuthenticationResponse;
+import com.petrapulse.PetraPulse.bo.RegisterRequest;
 import com.petrapulse.PetraPulse.enums.TokenType;
-import com.petrapulse.PetraPulse.models.TokenEntity;
-import com.petrapulse.PetraPulse.models.UsersDetailsEntity;
+import com.petrapulse.PetraPulse.entities.TokenEntity;
+import com.petrapulse.PetraPulse.entities.AppUsersEntity;
 import com.petrapulse.PetraPulse.repositories.TokenRepository;
 import com.petrapulse.PetraPulse.repositories.UserDetailsJpaRepository;
-import com.petrapulse.PetraPulse.services.JWTService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,11 +30,11 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) { //SignUp
-        var user = UsersDetailsEntity.builder()
+        var user = AppUsersEntity.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
-                .phoneNumber(request.getPhoneNumber())
-                .address(request.getAddress())
+                .country(request.getCountry())
+                .dateOfBirth(request.getDateOfBirth())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
                 .build();
@@ -65,7 +67,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    private void saveUserToken(UsersDetailsEntity user, String jwtToken) {
+    private void saveUserToken(AppUsersEntity user, String jwtToken) {
         var token = TokenEntity.builder()
                 .user(user)
                 .token(jwtToken)
@@ -76,7 +78,7 @@ public class AuthenticationService {
         tokenRepository.save(token);
     }
 
-    private void revokeAllUserTokens(UsersDetailsEntity user) {
+    private void revokeAllUserTokens(AppUsersEntity user) {
         var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
         if (validUserTokens.isEmpty())
             return;

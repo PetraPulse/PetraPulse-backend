@@ -1,4 +1,4 @@
-package com.petrapulse.PetraPulse.auth;
+package com.petrapulse.PetraPulse.bo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

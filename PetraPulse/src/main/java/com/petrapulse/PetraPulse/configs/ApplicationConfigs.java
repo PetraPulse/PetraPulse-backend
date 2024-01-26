@@ -4,6 +4,7 @@ import com.petrapulse.PetraPulse.repositories.UserDetailsJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -16,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 // Step 5 Creating a config class, so we can manage all the beans within our app such as UserDetailsService
 @Configuration
 @RequiredArgsConstructor
+@EnableJpaAuditing
 public class ApplicationConfigs {
     private final UserDetailsJpaRepository userDetailsJpaRepository;
 
