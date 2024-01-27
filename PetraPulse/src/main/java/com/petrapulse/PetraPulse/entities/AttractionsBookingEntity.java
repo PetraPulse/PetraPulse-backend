@@ -13,9 +13,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
 @Setter
+@NoArgsConstructor
 @Getter
 public class AttractionsBookingEntity {
     @Id
@@ -39,6 +39,16 @@ public class AttractionsBookingEntity {
     @LastModifiedDate
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDate.now();
+    }
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDate.now();
+    }
+
     @ManyToOne
     @JoinColumn(name = "attraction_id")
     private AttractionEntity attraction;

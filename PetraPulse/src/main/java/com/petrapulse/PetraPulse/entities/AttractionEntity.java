@@ -14,8 +14,8 @@ import java.util.List;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class AttractionEntity {
     @Id
     @GeneratedValue
@@ -42,6 +42,15 @@ public class AttractionEntity {
     private LocalDate updatedAt;
     /* owning side: is the side that has the foreign key column that is used to establish the relationship. it typically contains the @JoinColumn annotation.
     *  Inverse Side: is the side that does not manage the foreign key column in the database. It is specified using the mappedBy attribute The mappedBy attribute is not used in @ManyToOne relationships. It is used in the inverse side of @OneToMany or @OneToOne relationships.*/
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDate.now();
+    }
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDate.now();
+    }
+
     @OneToMany(mappedBy = "attraction")
     private List<AttractionsBookingEntity> attractionsBooking;
     @OneToOne(mappedBy = "tripAttractionName")

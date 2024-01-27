@@ -36,6 +36,16 @@ public class TripDetailsEntity {
     @LastModifiedDate
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDate.now();
+    }
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDate.now();
+    }
+
     @OneToOne
     @JoinColumn(name="hotel_id")
     private HotelEntity tripHotelName;

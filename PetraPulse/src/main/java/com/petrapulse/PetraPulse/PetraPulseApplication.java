@@ -8,5 +8,4 @@ public class PetraPulseApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PetraPulseApplication.class, args);
 	}
-
 }

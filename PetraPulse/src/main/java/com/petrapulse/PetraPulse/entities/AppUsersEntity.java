@@ -1,6 +1,7 @@
 package com.petrapulse.PetraPulse.entities;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -38,7 +40,7 @@ public class AppUsersEntity implements UserDetails {
      @CreatedBy
      @Column(name = "created_by")
      private String createdBy;
-     @CreatedDate
+     @CreationTimestamp
      @DateTimeFormat(pattern = "yyyy-MM-dd")
      @Column(name = "created_at")
      private LocalDate createdAt;
@@ -49,6 +51,16 @@ public class AppUsersEntity implements UserDetails {
      @DateTimeFormat(pattern = "yyyy-MM-dd")
      @Column(name = "updated_at")
      private LocalDate updatedAt;
+     @PrePersist
+     protected void onCreate() {
+          this.createdAt = LocalDate.now();
+          this.createdBy = (this.createdBy != null) ? this.createdBy : username;
+     }
+     @PreUpdate
+     protected void onUpdate() {
+          this.updatedAt = LocalDate.now();
+          this.updatedBy=(this.updatedBy!=null)? this.updatedBy: username;
+     }
      @OneToMany(mappedBy = "user")
      private List<TokenEntity> tokens;
 

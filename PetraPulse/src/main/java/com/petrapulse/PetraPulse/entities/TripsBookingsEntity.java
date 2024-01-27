@@ -38,6 +38,15 @@ public class TripsBookingsEntity {
     @LastModifiedDate
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate updatedAt;
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDate.now();
+    }
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDate.now();
+    }
+
     @ManyToOne
     @JoinColumn(name="user_id")
     private AppUsersEntity tripUser;

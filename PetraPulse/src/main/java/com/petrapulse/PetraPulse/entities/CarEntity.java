@@ -18,8 +18,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class CarEntity {
     @Id
     @GeneratedValue
@@ -43,6 +43,15 @@ public class CarEntity {
     @LastModifiedDate
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate updatedAt;
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDate.now();
+    }
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDate.now();
+    }
+
     @OneToOne(mappedBy = "tripCarName")
     private TripDetailsEntity trip;
     @OneToOne(mappedBy = "car")

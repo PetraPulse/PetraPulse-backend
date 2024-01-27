@@ -16,9 +16,8 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
-
+@AllArgsConstructor
 public class HotelEntity {
     @Id
     @GeneratedValue
@@ -40,6 +39,15 @@ public class HotelEntity {
     @LastModifiedDate
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate updatedAt;
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDate.now();
+    }
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDate.now();
+    }
+
     @OneToOne(mappedBy = "tripHotelName")
     private TripDetailsEntity trip;
     @OneToMany(mappedBy = "hotelName")

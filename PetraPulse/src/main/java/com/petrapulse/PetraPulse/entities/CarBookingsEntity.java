@@ -13,10 +13,10 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
+@NoArgsConstructor
 public class CarBookingsEntity {
     @Id
     @GeneratedValue
@@ -38,6 +38,16 @@ public class CarBookingsEntity {
     @LastModifiedDate
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDate.now();
+    }
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDate.now();
+    }
+
     @OneToOne
     @JoinColumn(name="car_id")
     private CarEntity car;
