@@ -20,6 +20,7 @@ public class RegisterRequest {
     private String username;
     private String email;
     private String password;
+    private String confirmPassword;
     private String country;
     // We used @DateTimeFormat(pattern = "yyyy-MM-dd") so the date will be sent in a date format and not as a string to the client
     @DateTimeFormat(pattern = "yyyy-MM-dd")

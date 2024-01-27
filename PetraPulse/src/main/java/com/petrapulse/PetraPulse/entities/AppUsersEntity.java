@@ -30,6 +30,7 @@ public class AppUsersEntity implements UserDetails {
      private String username;
      private String email;
      private String password;
+     private String confirmPassword;
      private String country;
      @DateTimeFormat(pattern = "yyyy-MM-dd")
      @Column(name = "date_of_birth")

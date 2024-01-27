@@ -40,6 +40,7 @@ public class AuthenticationService {
                 .country(request.getCountry())
                 .dateOfBirth(request.getDateOfBirth())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .confirmPassword(passwordEncoder.encode(request.getConfirmPassword()))
                 .role(new RoleTypesEntity(2L)) //L means Long
                 .build();
         var savedUser = userDetailsJpaRepository.save(user);
