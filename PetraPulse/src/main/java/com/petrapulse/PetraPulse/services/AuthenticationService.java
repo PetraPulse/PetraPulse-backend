@@ -15,10 +15,12 @@ import com.petrapulse.PetraPulse.repositories.UserDetailsJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -116,6 +118,26 @@ public class AuthenticationService {
                         .build();
                 //using the Jackson library to write the authResponse object as JSON to the output stream of an HTTP response.
                 new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
+            }
+        }
+    }
+
+    public void logout(HttpServletRequest request, HttpServletResponse response) {
+        // Perform logout actions such as invalidating session or tokens
+        // For example, clear session attributes or revoke tokens
+
+        // Invalidate session (if using HttpSession)
+        request.getSession().invalidate();
+
+        // Clear cookies or tokens
+        // For example, remove JWT token from client-side (if using JWT)
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                cookie.setMaxAge(0);
+                cookie.setValue(null);
+                cookie.setPath("/");
+                response.addCookie(cookie);
             }
         }
     }

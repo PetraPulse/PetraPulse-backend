@@ -12,14 +12,16 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity(name = "roletypesentity")
 public class RoleTypesEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "role_id") // Adjust column name if necessary
     private Long id;
+
     @Enumerated(value = EnumType.STRING)
     private Roles roleName;
     @CreatedBy

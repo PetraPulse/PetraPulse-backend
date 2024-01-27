@@ -3,17 +3,22 @@ package com.petrapulse.PetraPulse.controllers;
 import com.petrapulse.PetraPulse.bo.AuthenticationRequest;
 import com.petrapulse.PetraPulse.bo.AuthenticationResponse;
 import com.petrapulse.PetraPulse.bo.RegisterRequest;
+import com.petrapulse.PetraPulse.entities.AppUsersEntity;
+import com.petrapulse.PetraPulse.repositories.UserDetailsJpaRepository;
 import com.petrapulse.PetraPulse.services.AuthenticationService;
 import com.petrapulse.PetraPulse.services.UsersDetailsServiceImpl;
 import com.petrapulse.PetraPulse.util.exceptions.BodyGuardException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.Principal;
+import java.util.Optional;
 
 // Step 9 (End Points)
 @Controller
@@ -22,6 +27,45 @@ public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
     private final UsersDetailsServiceImpl usersDetailsService;
+    private final UserDetailsJpaRepository userDetailsJpaRepository;
+
+
+//    @GetMapping("/")
+//    public String getHome(Principal p, Model m) {
+//        if (p != null) {
+//            String username = p.getName();
+//            AppUsersEntity applicationUser = userDetailsJpaRepository.findByUsername(username);
+//            m.addAttribute("username", username);
+//        }
+//        return "HomePage.html";
+//    }
+//@GetMapping("/")
+//public String getHome(Principal principal, Model model) {
+//    if (principal != null) {
+//        String username = principal.getName();
+//        Optional<AppUsersEntity> userOptional = userDetailsJpaRepository.findByUsername(username);
+//        if (userOptional.isPresent()) {
+//            AppUsersEntity applicationUser = userOptional.get();
+//            model.addAttribute("username", username);
+//        }
+//    }
+//    return "HomePage.html";
+//}
+
+
+    @GetMapping("/")
+    public String getHome(Principal p, Model m) {
+        if (p != null) {
+            String username = p.getName();
+            Optional<AppUsersEntity> userOptional = userDetailsJpaRepository.findByUsername(username);
+            m.addAttribute("username", username);
+        }
+        return "HomePage.html";
+    }
+
+
+
+
     @GetMapping("/signup")
     public String signup() {
        return "SignUpPage";
@@ -48,18 +92,35 @@ public class AuthenticationController {
     public String login() {
         return "LoginPage";
     }
-    @PostMapping("/login")
-    public String login(@ModelAttribute AuthenticationRequest request,Model model) {
-        try {
-            usersDetailsService.createPostValidation(request);
-            authenticationService.authenticate(request);
-            return "redirect:/";
-        } catch (BodyGuardException e) {
-            handleLoginViolation(e.getMessage(), model);
-            return "LoginPage";
-        }
+//    @PostMapping("/login")
+//    public String login(@ModelAttribute AuthenticationRequest request,Model model) {
+//        try {
+//            usersDetailsService.createPostValidation(request);
+//            authenticationService.authenticate(request);
+//            return "redirect:/";
+//        } catch (BodyGuardException e) {
+//            handleLoginViolation(e.getMessage(), model);
+//            return "LoginPage";
+//        }
+//    }
+@PostMapping("/login")
+public String login(@ModelAttribute AuthenticationRequest request, Model model) {
+    try {
+        usersDetailsService.createPostValidation(request);
+        authenticationService.authenticate(request);
+        return "redirect:/";
+    } catch (BodyGuardException e) {
+        handleLoginViolation(e.getMessage(), model);
+        return "LoginPage";
     }
+}
 
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        // Perform logout actions here
+        authenticationService.logout(request, response);
+        return "redirect:/login"; // Redirect to login page after logout
+    }
     @PostMapping("/refresh-token")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         authenticationService.refreshToken(request, response);
