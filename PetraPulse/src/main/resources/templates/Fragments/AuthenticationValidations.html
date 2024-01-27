@@ -6,10 +6,15 @@
 </head>
 <body>
 <!--SignUp Validation Messages-->
-<nav th:if="${usernameMessage}"  th:fragment="username-error" th:text="${usernameMessage}"></nav>
-<nav th:if="${passwordMessage}"  th:fragment="password-error" th:text="${passwordMessage}"></nav>
+<nav th:if="${signupUsernameMessage}"  th:fragment="signupUsername-error" th:text="${signupUsernameMessage}"></nav>
+<nav th:if="${signupPasswordMessage}"  th:fragment="signupPassword-error" th:text="${signupPasswordMessage}"></nav>
+<nav th:if="${confirmPasswordMessage}"  th:fragment="confirmPassword-error" th:text="${confirmPasswordMessage}"></nav>
 <nav th:if="${emailMessage}"  th:fragment="email-error" th:text="${emailMessage}"></nav>
 <nav th:if="${dateOfBirthMessage}"  th:fragment="dateOfBirth-error" th:text="${dateOfBirthMessage}"></nav>
+<nav th:if="${dateOfBirthMessage2}"  th:fragment="dateOfBirth2-error" th:text="${dateOfBirthMessage2}"></nav>
 
+<!--Login Validation Messages-->
+<nav th:if="${loginUsernameMessage}"  th:fragment="loginUsername-error" th:text="${loginUsernameMessage}"></nav>
+<nav th:if="${loginPasswordMessage}"  th:fragment="loginPassword-error" th:text="${loginPasswordMessage}"></nav>
 </body>
 </html>

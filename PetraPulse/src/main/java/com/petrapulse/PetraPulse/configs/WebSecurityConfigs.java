@@ -29,7 +29,17 @@ public class WebSecurityConfigs {
                 .authorizeRequests()
                 .antMatchers("/","/signup","/login")
                 .permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().authenticated().and()
+                .formLogin()
+                .loginPage("/")
+                .permitAll()
+                .loginProcessingUrl("/perform_login")
+                .defaultSuccessUrl("/", true)
+                .failureUrl("/login?error=true")
+                .and()
+                .logout()
+                .logoutUrl("/perform_logout")
+                .logoutSuccessUrl("/")
                 .and()
                 .sessionManagement()//A session is a period of interaction between a user and a web application. It starts when a user accesses the application and ends when the user logs out or the session expires.
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) //In a stateless approach, each request is independent, and the server does not store any session-related information between requests. This is common in RESTful APIs using JWT for authentication.
